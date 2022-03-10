@@ -23,6 +23,5 @@ def log_init():
     logger.addHandler(console)
     return logger
 
-
 # 日志对象
 logger = log_init()

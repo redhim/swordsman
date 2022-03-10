@@ -209,10 +209,17 @@ class Driver(object):
         测试驱动类
     """
 
-    def __init__(self, folder_path):
+    def __init__(self, folder_path, env_filename):
+        """
+         初始化
+        :param folder_path: 用例配置等文件的根目录位置
+        :param env_filename: 环境文件名称
+        """
         self.__case_path__ = os.path.join(folder_path, 'testcase')  # 测试用例目录
         self.__config_path__ = os.path.join(folder_path, 'config')  # 配置文件目录
         self.__report_path__ = os.path.join(folder_path, 'report')  # 报告文件目录
+        # 载入测试环境配置
+        self.config.load(os.path.join(self.__config_path__, env_filename))
 
         self.testtask = TestTask()  # 测试任务
         self.config = Config()  # 配置信息类
@@ -281,9 +288,6 @@ class Driver(object):
             env_filename,环境配置文件名称
             case_filename,执行的用例文件名称
         """
-        # 载入测试环境配置
-        self.config.load(os.path.join(self.__config_path__, env_filename))
-
         # 载入测试用例
         if case_filename is not None and case_folder is not None:
             self.load_from_file(os.path.join(self.__case_path__, case_folder, case_filename))
